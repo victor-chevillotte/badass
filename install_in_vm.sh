@@ -9,3 +9,5 @@ newgrp docker
 
 sudo add-apt-repository ppa:gns3/ppa -y
 sudo apt install gns3-gui -y
+
+echo "Restart your VM !"
