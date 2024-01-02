@@ -1,3 +1,5 @@
+## GLOSSARY
+
 ### FRROUTING
 - **FRRouting (FRR):** An open-source Internet routing protocol suite for Linux and Unix platforms. It includes several protocol-specific daemons and a central daemon called zebra. These daemons manage protocols and build routing tables based on exchanged information.
 
