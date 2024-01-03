@@ -1,2 +1,3 @@
 docker build -t custom_frrouting -f ./frrouting_Dockerfile .
-docker pull alpine
+docker build -t custom_host -f ./host_Dockerfile .
+

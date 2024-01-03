@@ -1,0 +1,4 @@
+FROM alpine:latest
+
+COPY ./host1.sh /host1.sh
+COPY ./host2.sh /host2.sh
