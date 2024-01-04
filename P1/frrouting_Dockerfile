@@ -1,8 +1,0 @@
-FROM frrouting/frr
-
-RUN rm -rf /etc/frr/daemons
-
-COPY ./frroutig_config /etc/frr/daemons
-COPY ./frrouting_vtysh.conf /etc/frr/vtysh.conf
-COPY ./router1.sh /router1.sh
-COPY ./router2.sh /router2.sh
