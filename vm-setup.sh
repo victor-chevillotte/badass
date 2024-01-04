@@ -5,8 +5,6 @@ sudo apt install git docker.io -y
 sudo usermod -aG docker $USER
 newgrp docker
 
-# sudo  apt install gnome-session-flashback
-
 # GNS3
 
 sudo add-apt-repository ppa:gns3/ppa -y
