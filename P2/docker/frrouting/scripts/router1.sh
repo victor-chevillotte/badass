@@ -22,7 +22,7 @@ case $choice in
 	# VXLAN multicast
 	ip link add name vxlan10 type vxlan id 10 dev eth0 group 239.1.1.1 dstport 4789
  	;;
-	*)
+  *)
     echo "Invalid choice. Please run the script again and choose either 'u' for Unicast or 'm' for Multicast."
     exit 1
     ;;
