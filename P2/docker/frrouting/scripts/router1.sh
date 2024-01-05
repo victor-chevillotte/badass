@@ -1,5 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
+echo "Warning : Use Bash not sh !!!"
 # vxlan config
 ip link add br0 type bridge
 ip link set dev br0 up
