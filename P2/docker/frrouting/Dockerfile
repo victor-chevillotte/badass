@@ -1,4 +1,4 @@
-FROM quay.io/frrouting/frr:7.3.1
+FROM quay.io/frrouting/frr:9.0.2
 
 RUN rm -rf /etc/frr/daemons
 
