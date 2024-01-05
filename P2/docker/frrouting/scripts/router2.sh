@@ -15,7 +15,7 @@ case $choice in
     echo "Setting up Unicast..."
 
 	# VXLAN unicast 
-	ip link add name vxlan10 type vxlan id 10 dev eth0 remote 10.1.1.2 local 10.1.1.1 dstport 4789
+	ip link add name vxlan10 type vxlan id 10 dev eth0 remote 10.1.1.1 local 10.1.1.2 dstport 4789
 	;;
   m|M)
 	echo "Setting up Multicast..."
