@@ -1,14 +1,37 @@
 #!/bin/bash
 
 echo "Warning : Use Bash not sh !!!"
-# vxlan config
-ip link add br0 type bridge
-ip link set dev br0 up
-ip addr add 10.1.1.1/24 dev eth0 
-ip link add name vxlan10 type vxlan id 10 dev eth0 remote 10.1.1.2 local 10.1.1.1 dstport 4789
-ip addr add 20.1.1.1/24 dev vxlan10
 
-brctl addif br0 eth1 
-brctl addif br0 vxlan10
+vtysh
+conf t
 
-ip link set dev vxlan10 up
+no ipv6 forwarding
+
+interface eth0
+ip address 10.1.1.1/30
+
+interface eth1
+ip address 10.1.1.5/30
+
+interface eth2
+ip address 10.1.1.9/30
+
+interface lo
+ip address 1.1.1.1/32
+
+router bgp 1
+neighbor ibgp peer-group
+neighbor ibgp remote-as 1
+neighbor ibgp update-source lo
+bgp listen range 1.1.1.0/29 peer-group ibgp
+
+address-family l2vpn evpn
+neighbor ibgp activate
+neighbor ibgp route-reflector-client
+exit-address-family
+
+router ospf
+network 0.0.0.0/0 area 0
+
+end
+write memory

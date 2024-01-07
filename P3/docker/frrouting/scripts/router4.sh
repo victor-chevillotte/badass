@@ -2,25 +2,25 @@
 
 echo "Warning : Use Bash not sh !!!"
 
-# vxlan config
 brctl addbr br0
 ip link set up dev br0
 ip link add vxlan10 type vxlan id 10 dstport 4789
 ip link set up dev vxlan10
 brctl addif br0 vxlan10
-brctl addif br0 eth1
+brctl addif br0 eth0
+
 
 vtysh
 conf t
 
 no ipv6 forwarding
 
-interface eth0
-ip address 10.1.1.2/30
+interface eth2
+ip address 10.1.1.10/30
 ip ospf area 0
 
 interface lo
-ip address 1.1.1.2/32
+ip address 1.1.1.4/32
 
 ip ospf area 0
 
