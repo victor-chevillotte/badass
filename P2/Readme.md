@@ -85,7 +85,10 @@ brctl addif br0 vxlan10
 
 
 ### Hosts
-For each host, follow these steps:
+
+For each host, the IP address of eth1 must be set  
+A script is provided in the root directory and is executed with the command `sh host<host_number>.sh`  
+
 
 1. Setup eth1 IP : 
 ```
