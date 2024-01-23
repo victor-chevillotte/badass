@@ -1,7 +1,8 @@
-FROM quay.io/frrouting/frr:9.0.2
+FROM quay.io/frrouting/frr:9.1.0
 
 RUN apk update && \
-    apk add iproute2
+    apk upgrade busybox && \
+    apk add util-linux iproute2 bridge-utils
 
 RUN rm -rf /etc/frr/daemons
 
