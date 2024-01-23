@@ -3,37 +3,45 @@
 echo "Warning : Use Bash not sh !!!"
 
 # vxlan config
-brctl addbr br0
-ip link set up dev br0
-ip link add vxlan10 type vxlan id 10 dstport 4789
-ip link set up dev vxlan10
-brctl addif br0 vxlan10
+ip link add name vxlan10 type vxlan id 10 dev eth0 dstport 4789
+ip link set dev vxlan10 up
+ip link add name br0 type bridge
+ip link set dev br0 up
 brctl addif br0 eth1
+brctl addif br0 vxlan10
 
+# configure terminal for frr routing
 vtysh
-conf t
+<< EOF
 
-no ipv6 forwarding
+	no ipv6 forwarding
 
-interface eth0
-ip address 10.1.1.2/30
-ip ospf area 0
+	interface eth0
+		ip address 10.1.1.2/30
 
-interface lo
-ip address 1.1.1.2/32
+		#Enable routing process OSPF on all IP networks on area 0
+		ip ospf area 0
+	exit
 
-ip ospf area 0
+	interface lo
+		ip address 1.1.1.2/32
+		ip ospf area 0
+	exit
 
-router bgp 1
-neighbor 1.1.1.1 remote-as 1
-neighbor 1.1.1.1 update-source lo
-
-address-family l2vpn evpn
-neighbor 1.1.1.1 activate
-advertise-all-vni
-exit-address-family
-
-router ospf
-
-end
-write memory
+	# Enable a routing process BGP with AS number 1
+	router bgp 1
+		# Specify a BGP neighbor with AS number 1
+		neighbor 1.1.1.1 remote-as 1
+		# Communicate with a neighbor through lo interface
+		neighbor 1.1.1.1 update-source lo
+		# Enable the Address Family for neighbor 1.1.1.1 and advertise all local VNIs
+		address-family l2vpn evpn
+		
+		neighbor 1.1.1.1 activate
+			advertise-all-vni
+		exit-address-family
+	exit
+	# Enable a routing process OSPF
+	router ospf
+	exit
+EOF
