@@ -11,7 +11,7 @@ brctl addif br0 eth1
 brctl addif br0 vxlan10
 
 #Enter in vtysh mode for configuring frr routing
-vtysh 
+vtysh << EOF
 	#Enter in terminal mode of vtysh
 	conf t 
 
@@ -47,3 +47,4 @@ vtysh
 		exit
 	exit
 exit
+EOF
