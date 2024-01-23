@@ -9,6 +9,6 @@ COPY ./config/daemons /etc/frr/daemons
 COPY ./config/vtysh.conf /etc/frr/vtysh.conf
 
 COPY ./scripts/router1_RR.sh /router1_RR.sh
-COPY ./scripts/router2.sh /router1.sh
-COPY ./scripts/router3.sh /router2.sh
-COPY ./scripts/router4.sh /router3.sh
+COPY ./scripts/router2.sh /router2.sh
+COPY ./scripts/router3.sh /router3.sh
+COPY ./scripts/router4.sh /router4.sh
