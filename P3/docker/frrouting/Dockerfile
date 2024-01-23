@@ -10,7 +10,7 @@ RUN rm -rf /etc/frr/daemons
 COPY ./config/daemons /etc/frr/daemons
 COPY ./config/vtysh.conf /etc/frr/vtysh.conf
 
-COPY ./scripts/routerRR.sh /routerRR.sh
+COPY ./scripts/router1_RR.sh /router1_RR.sh
 COPY ./scripts/router2.sh /router1.sh
 COPY ./scripts/router3.sh /router2.sh
 COPY ./scripts/router4.sh /router3.sh
