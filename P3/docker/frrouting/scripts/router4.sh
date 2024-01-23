@@ -9,7 +9,7 @@ ip link set dev br0 up
 brctl addif br0 eth0
 brctl addif br0 vxlan10
 
-vtysh
+vtysh << EOF
 	conf t
 		no ipv6 forwarding
 
@@ -36,3 +36,4 @@ vtysh
 		exit
 	exit
 exit
+EOF

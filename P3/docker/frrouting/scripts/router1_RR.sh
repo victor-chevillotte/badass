@@ -3,7 +3,7 @@
 echo "Warning : Use Bash not sh !!!"
 
 #Enter in vtysh mode for configuring frr routing
-vtysh 
+vtysh << EOF
 	#Enter in terminal mode of vtysh
 	conf t 
 
@@ -53,3 +53,4 @@ vtysh
 		exit
 	exit
 exit
+EOF
