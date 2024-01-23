@@ -3,7 +3,7 @@
 echo "Warning : Use Bash not sh !!!"
 # configure terminal for frr routing
 vtysh
-	conf t
+	<< EOF
 
 	no ipv6 forwarding
 
@@ -45,9 +45,8 @@ vtysh
 	exit
 
 	# Enable routing process OSPF on all IP networks on area 0
+	# OSPF = Open Shortest Path First
 	router ospf
 		network 0.0.0.0/0 area 0
 	exit
-
-end
-write memory
+EOF

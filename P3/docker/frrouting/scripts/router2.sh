@@ -12,7 +12,7 @@ brctl addif br0 vxlan10
 
 # configure terminal for frr routing
 vtysh
-conf t
+<< EOF
 
 	no ipv6 forwarding
 
@@ -43,6 +43,5 @@ conf t
 	exit
 	# Enable a routing process OSPF
 	router ospf
-
-end
-write memory
+	exit
+EOF

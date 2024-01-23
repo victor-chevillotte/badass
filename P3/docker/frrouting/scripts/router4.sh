@@ -10,7 +10,7 @@ brctl addif br0 eth0
 brctl addif br0 vxlan10
 
 vtysh
-conf t
+<< EOF
 
 	no ipv6 forwarding
 
@@ -34,7 +34,5 @@ conf t
 		exit-address-family
 	exit
 	router ospf
-exit
-
-end
-write memory
+	exit
+EOF
