@@ -21,8 +21,10 @@ routeur_mdesoeuv-2 | eth1      | bridged    | /
 routeur_mdesoeuv-2 | vxlan10   | 20.1.1.2   | 24
 
 
-
 ### Routers
+
+Routers must be configurated first, all commands are included in a script named `router1.sh` and `router2.sh` in the root directory  
+Each router must be setup with the command `bash router<router_number>.sh`  
 
 1. Create Bridge Domain
 ```
