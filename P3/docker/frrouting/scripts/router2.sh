@@ -10,9 +10,9 @@ ip link set dev br0 up
 brctl addif br0 eth1
 brctl addif br0 vxlan10
 
-#Enter in vtysh mode for configuring frr routing
+# Enter in vtysh mode for configuring frr routing
 vtysh << EOF
-	#Enter in terminal mode of vtysh
+	# Enter in terminal mode of vtysh
 	conf t 
 
 		no ipv6 forwarding

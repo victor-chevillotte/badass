@@ -2,9 +2,9 @@
 
 echo "Warning : Use Bash not sh !!!"
 
-#Enter in vtysh mode for configuring frr routing
+# Enter in vtysh mode for configuring frr routing
 vtysh << EOF
-	#Enter in terminal mode of vtysh
+	# Enter in terminal mode of vtysh
 	conf t 
 
 		no ipv6 forwarding
