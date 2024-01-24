@@ -4,7 +4,7 @@
 
 We want host 1, host 2 and host 3 to communicate together as if they were on the same network (On the same LAN) even if they are not.  
 This time we want to setup a network in which every router knows all the mac adresses of the devices connected to it. This can be done by using `BGP EVPN`.  
-In addition we will keep our VXLAN configuration as explained in P2 to able the hosts to communicate with each other.
+In addition we will keep our VXLAN configuration as explained in P2 to enable the hosts to communicate with each other.
 
 ## How EVPN is used to share mac addresses connected to the network ?
 
@@ -28,7 +28,6 @@ In an EVPN (Ethernet VPN) environment, particularly in a spine-leaf architecture
     - Other leaf routers in the network also receive these BGP advertisements. This allows all leaf routers to have synchronized knowledge about the MAC addresses in the network, even if they did not directly learn them from connected devices.
     - This synchronization ensures that any leaf router can forward traffic to any MAC address in the network, as it knows which leaf router is connected to that particular MAC address.
 
-In summary, both leaf and spine routers participate in learning and distributing MAC address information in an EVPN network. Leaf routers learn MAC addresses directly from connected devices and advertise this information via EVPN/BGP. Spine routers, along with other leaf routers, receive these advertisements, ensuring network-wide knowledge of MAC address reachability. This coordination is crucial for efficient routing and forwarding of traffic within the spine-leaf architecture.
 
 The routing schema is as follows
 
@@ -36,19 +35,24 @@ The routing schema is as follows
 
 ## Configurations
 
-Name               | Interface | IP Address | Mask
--------------------|-----------|------------|-------------------
-host_mdesoeuv-1    | eth1      | 30.1.1.1   | 24 (255.255.255.0)
-host_mdesoeuv-2    | eth1      | 30.1.1.2   | 24
-routeur_mdesoeuv-1 | eth0      | 10.1.1.1   | 24
-routeur_mdesoeuv-1 | eth1      | bridged    | /       
-routeur_mdesoeuv-1 | vxlan10   | 20.1.1.1   | 24
-routeur_mdesoeuv-2 | eth0      | 10.1.1.2   | 24
-routeur_mdesoeuv-2 | eth1      | bridged    | /      
-routeur_mdesoeuv-2 | vxlan10   | 20.1.1.2   | 24
+Name               		| Interface | IP Address | Mask
+------------------------|-----------|------------|-------------------
+host_mdesoeuv-1    		| eth1      | 20.1.1.1   | 24 (255.255.255.0)
+host_mdesoeuv-2    		| eth0      | 20.1.1.2   | 24
+host_mdesoeuv-3    		| eth0      | 20.1.1.3   | 24
+routeur_mdesoeuv-1 (RR) | eth0      | 10.1.1.1   | 30 (255.255.255.252)
+routeur_mdesoeuv-1 (RR) | eth1      | 10.1.1.5   | 30
+routeur_mdesoeuv-1 (RR)	| eth2	   	| 20.1.1.9   | 30
+routeur_mdesoeuv-1 (RR)	| lo		| 1.1.1.1    | 32 (255.255.255.255)
+routeur_mdesoeuv-2 		| eth0      | 10.1.1.2   | 30
+routeur_mdesoeuv-2 		| lo	    | 1.1.1.2    | 32     
+routeur_mdesoeuv-3 		| eth0      | 10.1.1.3   | 30
+routeur_mdesoeuv-3 		| lo	    | 1.1.1.3    | 32     
+routeur_mdesoeuv-4 		| eth0      | 10.1.1.4   | 30
+routeur_mdesoeuv-4 		| lo	    | 1.1.1.4    | 32     
 
 
-### Routers
+### Router RR (Spine)
 
 Routers must be configurated first, all commands are included in a script named `router1.sh` and `router2.sh` in the root directory  
 Each router must be setup with the command `bash router<router_number>.sh`  
@@ -110,6 +114,7 @@ brctl addif br0 eth1
 brctl addif br0 vxlan10
 ```
 
+### Routers (Leafs)
 
 ### Hosts
 
@@ -133,8 +138,6 @@ $ ip addr add <ip_address>/<mask> dev eth1
 #### On the Router console
 
 - Show vxlan configuration
-`/sbin/ip -d link show vxlan10`  
 
 - Show mac addresses in bridge domain
-`/usr/sbin/brctl showmacs br0`
 
