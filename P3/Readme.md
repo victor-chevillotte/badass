@@ -54,71 +54,130 @@ routeur_mdesoeuv-4 		| lo	    | 1.1.1.4    | 32
 
 ### Router RR (Spine)
 
-Routers must be configurated first, all commands are included in a script named `router1.sh` and `router2.sh` in the root directory  
-Each router must be setup with the command `bash router<router_number>.sh`  
+Spine Router must be configurated first, all commands are included in a script named `router1_RR.sh` in the root directory  
+The router must be setup with the command `bash router1_RR.sh`  
 
-1. Create Bridge Domain
-```
-ip link add br0 type bridge
-ip link set dev br0 up
+Le script que vous avez fourni est un script Bash pour configurer un routeur utilisant FRR (Free Range Routing), un logiciel de routage réseau. Voici les explications des différentes étapes du script :
+Sure, I'll explain the provided Bash script in English. This script is for configuring a router using FRR (Free Range Routing), a network routing software. Here's the breakdown of the script's steps:
 
-```
+1. **Entering vtysh Mode for FRR Routing Configuration**:
+   ```bash
+   vtysh << EOF
+	conf t
+   ```
+   This command enters the vtysh mode, a command-line interface for FRR, enabling the configuration of the router. `conf t` stands for configuration which enables us to use the cli below :
 
-2. Set eth0 ip address  
+2. **Configuration of Interfaces and IP Addresses**:
+   - Disabling IPv6 routing:
+     ```
+     no ipv6 forwarding
+     ```
+   - Setting up IP addresses for the interfaces `eth0`, `eth1`, `eth2`, and the loopback interface `lo`:
+     ```
+     interface [interface name]
+         ip address [IP address]/[subnet mask]
+     exit
+     ```
 
-`ip addr add 10.1.1.1/24 dev eth0`
+3. **BGP (Border Gateway Protocol) Configuration**:
+   - Enabling the BGP routing process with Autonomous System (AS) number 1:
+     ```bash
+     router bgp 1
+     ```
+   - Setting up a BGP peer group and associating it with AS number 1:
+     ```bash
+     neighbor ibgp peer-group
+     neighbor ibgp remote-as 1
+     ```
+   - Setting the update source for BGP and dynamic listening for BGP neighbors:
+     ```bash
+     neighbor ibgp update-source lo
+     bgp listen range 1.1.1.0/29 peer-group ibgp
+     ```
+   - Configuring route reflector clients in the `l2vpn evpn` address family:
+     ```bash
+     address-family l2vpn evpn
+         neighbor ibgp activate
+         neighbor ibgp route-reflector-client
+     exit-address-family
+     ```
 
-3. Create VxLAN
-
-Creation of a VxLAN with id 10  
-The eth0 interface of the local router is linked to the eth0 interface (referred as `local`) of the second router (referred as `remote`)  
-
-
-- Unicast  
-
-Unicast is a one-to-one delivery mode
-
-```
-ip link add name vxlan10 type vxlan id 10 dev eth0 remote 10.1.1.2 local 10.1.1.1 dstport 4789
-```
-
-- Multicast
-
-Multicast is a one-to-many delivery mode and is more efficient when packets must be delevered to multiple destinations at once
-
-```
-ip link add name vxlan10 type vxlan id 10 dev eth0 group 239.1.1.1 dstport 4789
-```
-
-- Add ip address to VxLAN
-
-```
-ip addr add 20.1.1.1/24 dev vxlan10 
-```
-
-- Activate VxLAN
-
-```
-ip link set dev vxlan10 up
-```
-
-4. Add eth1 to Brigde Domain
-
-```
-brctl addif br0 eth1
-```
-
-5. Add vxlan10 to Bridge Domain
-
-```
-brctl addif br0 vxlan10
-```
+4. **OSPF (Open Shortest Path First) Configuration**:
+   - Enabling the OSPF routing process on all IP networks in area 0:
+     ```bash
+     router ospf
+         network 0.0.0.0/0 area 0
+     exit
+     ```
 
 ### Routers (Leafs)
 
+Leafs Router must then be configurated, all commands are included in a script named `router1.sh`, `router2.sh` and `router3.sh` in the root directory  
+Each router must be setup with the command `bash router<router_number>.sh`  
+
+
+Certainly! Here's an explanation of the provided Bash script in English. This script is for configuring a router using FRR (Free Range Routing) with a focus on OSPF and BGP configurations.
+
+
+1. **Entering vtysh Mode for FRR Routing Configuration**:
+   ```bash
+   vtysh << EOF
+   ```
+   This initiates the vtysh mode, a command-line interface for FRR, to begin configuring the router.
+
+2. **Configuration of Interfaces and IP Addresses**:
+   - Entering configuration mode:
+     ```bash
+     conf t
+     ```
+   - Disabling IPv6 routing:
+     ```bash
+     no ipv6 forwarding
+     ```
+   - Setting up the IP address for the `eth0` interface and enabling OSPF for this interface:
+     ```bash
+     interface eth0
+         ip address 10.1.1.2/30
+         ip ospf area 0
+     exit
+     ```
+   - Configuring the loopback interface `lo` with an IP address and enabling OSPF:
+     ```bash
+     interface lo
+         ip address 1.1.1.2/32
+         ip ospf area 0
+     exit
+     ```
+
+3. **BGP (Border Gateway Protocol) Configuration**:
+   - Enabling the BGP routing process with Autonomous System (AS) number 1:
+     ```bash
+     router bgp 1
+     ```
+   - Configuring a BGP neighbor in the same AS and setting the update source:
+     ```bash
+     neighbor 1.1.1.1 remote-as 1
+     neighbor 1.1.1.1 update-source lo
+     ```
+   - Enabling the L2VPN EVPN address family for the BGP neighbor and advertising all local VNIs (Virtual Network Identifiers):
+     ```bash
+     address-family l2vpn evpn
+         neighbor 1.1.1.1 activate
+         advertise-all-vni
+     exit-address-family
+     ```
+
+4. **OSPF (Open Shortest Path First) Configuration**:
+   - Enabling the OSPF routing process:
+     ```bash
+     router ospf
+     exit
+     ```
+In summary, this script configures the `eth0` and loopback interfaces with IP addresses and OSPF settings, sets up BGP with a specific neighbor, and enables L2VPN EVPN address family for neighbor communication and VNI advertisement. It focuses on integrating OSPF and BGP for effective routing management.
+
 ### Hosts
 
-For each host, the IP address of eth1 must be set  
+Finally, for each host, the IP address of eth1 must be set  
 A script is provided in the root directory and is executed with the command `sh host<host_number>.sh`  
 
 
@@ -137,7 +196,16 @@ $ ip addr add <ip_address>/<mask> dev eth1
 
 #### On the Router console
 
-- Show vxlan configuration
+```bash 
+	vtysh
+```
 
-- Show mac addresses in bridge domain
+```bash 
+	conf t
+```
 
+To check bgp config :
+
+```bash 
+	router bgp 1
+```
