@@ -1,5 +1,10 @@
 # P2
 
+## Goal
+
+We want host 1 and host 2 to communicate together as if they were on the same network (On the same LAN) even if they are not. As an exemple we want two appartments to communicate with each other and feel like they are only one big appartment.  
+To make this possible, we will setup a VXLAN which will know and abastract each door of the corridoor and will link the appartments.
+
 We want to create a VxLAN to encapsulate the incoming traffic from the Hosts at layer 2 in UDP packets with a VxLAN header containing the VxLAN identifier (VNI).  
 These packets are then decapsulated at the other end of VxLAN (Header removed) and the content is delivery to the specified IP Address.     
 
