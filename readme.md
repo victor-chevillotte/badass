@@ -29,7 +29,7 @@ The purpose of this project is to deepen our knowledge of networking by simulati
 ### Daemon Options
 - General options for each daemon are set to connect to the address "127.0.0.1" or "::1" for IPv6-specific daemons. This includes settings for zebra, bgpd, ospfd, and others, indicating their network interface configurations.
 
-### VTEP (Virtual Tunnel End Point)
+### VTEP (VxLAN Tunnel End Point)
 - **VTEP:** A component in VXLAN architecture that maps end devices to VXLAN segments and performs VXLAN encapsulation and de-encapsulation. VTEPs are responsible for encapsulating the original Ethernet frame into a VXLAN packet, adding a VXLAN header, and then sending it through the underlying IP network.
 
 
