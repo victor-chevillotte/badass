@@ -50,3 +50,7 @@ The purpose of this project is to deepen our knowledge of networking by simulati
 
 ### ICMP (Internet Control Message Protocol)
 - **ICMP:** A network layer protocol used by network devices to diagnose network communication issues. ICMP is mainly used for error reporting and operational inquiries, like determining if data is reaching its intended destination in a timely manner.
+
+
+### VTYSH (VTY Shell)
+- **VTYSH:** A centralized command-line interface for FRRouting (FRR). VTYSH provides an integrated shell for the FRR daemons, allowing administrators to configure various routing protocols and services from a single interface. It combines the interfaces of all FRR daemons into one, enabling easier management and configuration. VTYSH connects to each daemon's VTY (Virtual Terminal) interface and aggregates their command-line interfaces (CLIs), simplifying the process of managing complex routing configurations in a network environment.
