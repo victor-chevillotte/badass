@@ -10,14 +10,14 @@ The purpose of this project is to deepen our knowledge of networking by simulati
 ### ZEBRA
 - **zebra:** A daemon that integrates routes from multiple protocols and updates the Linux kernel's routing table. Described as an IP routing manager in FRRouting, zebra is responsible for managing kernel routing table updates, interface lookups, and route redistribution. It is enabled by default, with the option to activate other daemons as needed.
 
-### BGPD
+### BGPD (Border Gateway Protocol Deamon)
 - **bgpd:** This daemon implements the Border Gateway Protocol (BGP) to manage network routing tables. Its role is to share network reachability information with other BGP systems, using a multi-step decision process to determine the best routing paths.
 
-### OSPFD
+### OSPFD (Open Shortest Path First Deamon)
 - **ospfd:** A daemon for the Open Shortest Path First (OSPF) protocol, aimed at replacing the older RIP protocol. OSPF offers faster response to network changes, improved failure detection, and a comprehensive understanding of the network topology among routers.
 
-### ISISD
-- **ISIS:** A routing protocol offering scalable network support and quick convergence, similar to OSPF. The isisd daemon requires interface information from zebra and must be started after zebra. It is configured through a specific file, isisd.conf.
+### IS-IS (Intermediate System to Intermediate System)
+- **IS-IS:** A routing protocol designed for use within an administrative domain or network. It is a link-state protocol, similar to OSPF, and efficiently routes data in complex networks of routers and switches. IS-IS is used for routing IP and, historically, CLNS traffic.
 
 ### BUSYBOX
 - **BusyBox:** A compilation of many common UNIX utilities into a single, small executable. It serves as a substitute for utilities found in GNU fileutils, shellutils, etc., and is designed for small or embedded systems with a focus on size efficiency.
@@ -32,8 +32,6 @@ The purpose of this project is to deepen our knowledge of networking by simulati
 ### VTEP (Virtual Tunnel End Point)
 - **VTEP:** A component in VXLAN architecture that maps end devices to VXLAN segments and performs VXLAN encapsulation and de-encapsulation. VTEPs are responsible for encapsulating the original Ethernet frame into a VXLAN packet, adding a VXLAN header, and then sending it through the underlying IP network.
 
-### IS-IS (Intermediate System to Intermediate System)
-- **IS-IS:** A routing protocol designed for use within an administrative domain or network. It is a link-state protocol, similar to OSPF, and efficiently routes data in complex networks of routers and switches. IS-IS is used for routing IP and, historically, CLNS traffic.
 
 ### MPLS (Multiprotocol Label Switching)
 - **MPLS:** A routing technique in telecommunications networks that directs data from one node to the next based on short path labels rather than long network addresses. MPLS can encapsulate packets of various network protocols and is highly scalable and protocol agnostic.
