@@ -5,7 +5,7 @@ echo "Warning : Use Bash not sh !!!"
 # Prompt for unicast or multicast
 read -p "Activate Unicast (u) or Multicast (m)? " choice
 
-# vxlan config
+# Bridge domain config
 ip link add br0 type bridge
 ip link set dev br0 up
 ip addr add 10.1.1.2/24 dev eth0
