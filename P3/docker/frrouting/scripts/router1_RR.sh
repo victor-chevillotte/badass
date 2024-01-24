@@ -36,7 +36,7 @@ vtysh << EOF
 			# Communicate with a neighbor through lo interface
 			neighbor ibgp update-source lo
 
-			# Configure BGP dynamic neighbors listen on specified TRUSTED range and add then to specified peer group
+			# Configure BGP dynamic neighbors listen on specified range and add then to specified peer group
 			bgp listen range 1.1.1.0/29 peer-group ibgp
 
 			# Configure a neighbor in peer group ibgp as Route Reflector client
