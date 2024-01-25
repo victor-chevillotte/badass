@@ -3,6 +3,8 @@
 The purpose of this project is to deepen our knowledge of networking by simulating several networks (VXLAN+BGP-EVPN) in GNS3.
 
 **The docker images of each part must be built using the script `build.sh` present in the docker folder of each part for proper image tagging**  
+**Main VM :** Ubuntu 22.04
+Configuration Script : `main-vm.sh`
 
 ## GLOSSARY
 
